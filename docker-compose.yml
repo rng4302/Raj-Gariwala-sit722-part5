@@ -1,1 +1,31 @@
-# Your Solution
+version: '3'
+services:
+  book_catalog:
+    image: book_catalog:latest
+    build: 
+      context: ./book_catalog
+      dockerfile: Dockerfile
+      args:
+        - NO_CACHE=true
+    container_name: book_catalog_cntr
+    ports:
+     - "4003:5001"
+    environment:
+      - PORT=5001
+      - DATABASE_URL=postgresql://project_part5_0f1z_user:aSGdttT4qyFFitLFDBiCoYjf4X7mpOhk@dpg-crtoqve8ii6s73agpc7g-a.oregon-postgres.render.com/project_part5_0f1z
+    restart: "no"
+
+  inventory_management:
+    image: inventory_management:latest
+    build: 
+      context: ./inventory_management
+      dockerfile: Dockerfile
+      args:
+        - NO_CACHE=true
+    container_name: inventory_management_cntr
+    ports:
+     - "4004:5002"
+    environment:
+      - PORT=5002
+      - DATABASE_URL=postgresql://project_part5_0f1z_user:aSGdttT4qyFFitLFDBiCoYjf4X7mpOhk@dpg-crtoqve8ii6s73agpc7g-a.oregon-postgres.render.com/project_part5_0f1z
+    restart: "no"
