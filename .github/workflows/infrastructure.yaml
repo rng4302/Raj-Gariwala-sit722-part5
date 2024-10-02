@@ -1,0 +1,38 @@
+name: 'Create Infrastructure with Terraform'
+
+on:
+  #
+  # Allows deletion to be invoked manually through the GitHub Actions user interface.
+  #
+  workflow_dispatch: 
+
+jobs:
+  terraform:
+    name: 'Terraform Apply'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout Code'
+        uses: actions/checkout@v2
+
+      - name: 'Setup Terraform'
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
+
+      - name: 'Azure Login'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Initialize Terraform'
+        working-directory: ./scripts/terraform
+        run: terraform init
+
+      - name: 'Terraform Plan'
+        working-directory: ./scripts/terraform
+        run: terraform plan
+
+      - name: 'Terraform Apply'
+        working-directory: ./scripts/terraform
+        run: terraform apply -auto-approve
