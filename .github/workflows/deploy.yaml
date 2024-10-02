@@ -35,7 +35,15 @@ jobs:
       
       # Checks-out your repository under $GITHUB_WORKSPACE.
       - uses: actions/checkout@v3
+      # Make scripts executable
+      - name: Make build-image.sh executable
+        run: chmod +x ./scripts/build-image.sh
 
+      - name: Make push-image.sh executable
+        run: chmod +x ./scripts/push-image.sh
+
+      - name: Make deploy.sh executable
+        run: chmod +x ./scripts/deploy.sh 
       #
       # Builds the Docker image.
       #

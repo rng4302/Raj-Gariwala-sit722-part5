@@ -14,7 +14,7 @@ spec:
     spec:
       containers: 
       - name: book-catalog
-        image: /book
+        image: ${{ secrets.CONTAINER_REGISTRY  }}/book:$VERSION
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5001
@@ -55,7 +55,7 @@ spec:
     spec:
       containers: 
       - name: inventory-management
-        image: /inventory
+        image: ${{ secrets.CONTAINER_REGISTRY  }}/inventory:$VERSION
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5002
