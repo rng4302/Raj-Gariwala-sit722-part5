@@ -2,7 +2,7 @@
 set -u # or set -o nounset
 : "$CONTAINER_REGISTRY"
 : "$VERSION"
-
+echo "$CONTAINER_REGISTRY:$VERSION"
 # Update the image tag in the Kubernetes deployment file
 sed -i "s|image: $CONTAINER_REGISTRY/book:.*|image: $CONTAINER_REGISTRY/book:$VERSION|g" ./scripts/kubernetes/deployment.yaml
 sed -i "s|image: $CONTAINER_REGISTRY/inventory:.*|image: $CONTAINER_REGISTRY/inventory:$VERSION|g" ./scripts/kubernetes/deployment.yaml
