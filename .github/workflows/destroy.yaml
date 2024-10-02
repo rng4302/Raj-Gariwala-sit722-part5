@@ -1,0 +1,32 @@
+name: 'Terraform Destroy Pipeline'
+
+on:
+  workflow_dispatch:
+    # You can manually trigger the workflow when needed
+
+jobs:
+  terraform:
+    name: 'Terraform Destroy'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout Code'
+        uses: actions/checkout@v2
+
+      - name: 'Setup Terraform'
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
+
+      - name: 'Azure Login'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Initialize Terraform'
+        working-directory: ./scripts/terraform
+        run: terraform init
+
+      - name: 'Terraform Destroy'
+        working-directory: ./scripts/terraform
+        run: terraform destroy -auto-approve
